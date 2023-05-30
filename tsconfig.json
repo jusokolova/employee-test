@@ -6,6 +6,8 @@
       "dom.iterable",
       "esnext"
     ],
+    "rootDir": "./src",
+    "baseUrl": "./src",
     "allowJs": true,
     "skipLibCheck": true,
     "esModuleInterop": true,
@@ -20,10 +22,18 @@
     "noEmit": true,
     "jsx": "react-jsx",
     "paths": {
-      "public": ["./public"],
-      "public/*": ["./public/*"],
-      "containers": ["./src/containers"],
-      "containers/*": ["./src/containers/*"]
+      "api": ["./api"],
+      "api/*": ["./api/*"],
+      "containers": ["./containers"],
+      "containers/*": ["./containers/*"],
+      "components": ["./components"],
+      "components/*": ["./components/*"],
+      "hocs": ["./hocs"],
+      "hocs/*": ["./hocs/*"],
+      "store": ["./store"],
+      "store/*": ["./store/*"],
+      "types": ["./types"]
     },
+    "include": ["src"],
   }
 }
