@@ -30,9 +30,12 @@
       "components/*": ["./components/*"],
       "hocs": ["./hocs"],
       "hocs/*": ["./hocs/*"],
+      "pages": ["./pages"],
+      "pages/*": ["./pages/*"],
       "store": ["./store"],
       "store/*": ["./store/*"],
-      "types": ["./types"]
+      "types": ["./types"],
+      "utils": ["./utils"]
     },
     "include": ["src"],
   }

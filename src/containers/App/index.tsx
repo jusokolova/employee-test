@@ -1,51 +1,24 @@
 import React from 'react';
-import { compose } from 'redux';
-import { connect } from 'react-redux';
+import { Navigate, Route, Routes, BrowserRouter } from 'react-router-dom';
 
-import type { EmployeeType } from 'types';
 
 import { initializeStore } from 'store';
-import { rootReducer, RootStore } from 'store/reducers';
-import { getEmployees, selectEmployees, selectIsLoading } from 'store/employee';
+import { rootReducer } from 'store/reducers';
+import { MainPage, Add, ROUTES } from 'pages';
 
 import { withReduxStore } from 'hocs';
-import { Button } from 'components';
 import './styles.css';
 
-type AppPropsType = {
-  onClick: () => void,
-  employees: EmployeeType[],
-  isLoading: boolean,
-};
-
-function App({ onClick, employees, isLoading }: AppPropsType) {
-  return (
+const App = () => (
+  <BrowserRouter>
     <div className="app">
-      <Button type="button" onClick={onClick}>
-        {isLoading ? '...Loading' : 'Get employee'}
-      </Button>
-
-      {employees && (
-        <ul>
-          {employees.map((employee) => (
-            <li key={employee.employeeId}>
-              {employee.firstName} {employee.lastName}
-            </li>
-          ))}
-        </ul>
-      )}
+      <Routes>
+        <Route path={ROUTES.MAIN} element={<MainPage />} />
+        <Route path={ROUTES.ADD} element={<Add />} />
+        <Route path="*" element={<Navigate to={ROUTES.MAIN} />} />
+      </Routes>
     </div>
-  );
-}
+  </BrowserRouter>
+);
 
-
-
-export default compose(
-  withReduxStore(initializeStore(rootReducer)),
-  connect((state: RootStore) => ({
-    employees: selectEmployees(state),
-    isLoading: selectIsLoading(state),
-  }), {
-    onClick: getEmployees,
-  }),
-)(App);
+export default withReduxStore(initializeStore(rootReducer))(App);

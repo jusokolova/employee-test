@@ -1,8 +1,6 @@
 import { axiosBaseRequest } from './index';
 import endpoints from './endpoints';
 
-export const fetchEmployees = <T>() => {
-  return axiosBaseRequest<T>({
-    url: endpoints.getEmployees,
-  });
-}
+export const fetchEmployees = <T>() => axiosBaseRequest<T>({
+  url: endpoints.getEmployees,
+});

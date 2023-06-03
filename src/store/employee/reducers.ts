@@ -2,7 +2,7 @@ import { createReducer } from '@reduxjs/toolkit';
 
 import type { EmployeeType } from 'types';
 
-import { setLoading, getEmployees } from './actions';
+import { setLoading, getEmployees, addEmployee } from './actions';
 
 type InitialStateType = {
   isLoading: boolean,
@@ -35,7 +35,21 @@ export const employeeReducer = createReducer(initialState, {
     state.isLoading = false;
     state.employees = payload;
   },
-  [getEmployees.rejected.type]: (state, { payload }) => {
+  [getEmployees.rejected.type]: (state) => {
+    state.isLoading = false;
+    state.isError = true;
+  },
+  [addEmployee.pending.type]: (state) => {
+    state.isLoading = true;
+
+    if (state.isError) {
+      state.isError = false;
+    }
+  },
+  [addEmployee.fulfilled.type]: (state, { payload }) => {
+    state.isLoading = false;
+  },
+  [addEmployee.rejected.type]: (state, { payload }) => {
     state.isLoading = false;
     state.isError = true;
   },
