@@ -10,12 +10,13 @@ import { ROUTES } from 'pages';
 import type { ErrorsType } from '../../validate';
 
 type FormProps = {
-  validate: (values: EmployeeType) => ErrorsType,
-  onSubmit: (values: EmployeeType) => void,
+  initialValues: Record<string, any>
+  validate: (values: Partial<EmployeeType>) => ErrorsType,
+  onSubmit: (values: Partial<EmployeeType>) => void,
   children: (form: FormRenderProps<EmployeeType, Partial<EmployeeType>>) => ReactNode,
 }
 
-export const Form: FC<FormProps> = ({ validate, onSubmit, children }) => {
+export const Form: FC<FormProps> = ({ initialValues, validate, onSubmit, children }) => {
   const navigate = useNavigate();
   const returnToMain = useCallback(() => {
     navigate(ROUTES.MAIN);
@@ -23,6 +24,7 @@ export const Form: FC<FormProps> = ({ validate, onSubmit, children }) => {
 
   return  (
     <FForm
+      initialValues={initialValues}
       onSubmit={(values: EmployeeType) => onSubmit(mapNewEmployee(values))}
       validate={validate}
       render={(form) => (

@@ -3,12 +3,12 @@ import endpoints from './endpoints';
 
 import type { EmployeeType } from 'types';
 
-export const addEmployeeRequest = <T>(employee: EmployeeType) => axiosBaseRequest<T>({
+export const editEmployeeRequest = <T>(employee: Partial<EmployeeType>) => axiosBaseRequest<T>({
   headers: {
     Accept: '*/*',
     'Content-Type': 'application/json',
   },
-  method: 'POST',
-  url: endpoints.addEmployee,
+  method: 'PUT',
+  url: endpoints.default,
   data: employee,
 });

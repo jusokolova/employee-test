@@ -32,6 +32,8 @@
       "hocs/*": ["./hocs/*"],
       "pages": ["./pages"],
       "pages/*": ["./pages/*"],
+      "shared": ["./shared"],
+      "shared/*": ["./shared/*"],
       "store": ["./store"],
       "store/*": ["./store/*"],
       "types": ["./types"],

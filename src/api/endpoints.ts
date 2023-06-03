@@ -1,6 +1,8 @@
+const defaultEndpoint = 'https://reactapi.bsite.net/api/Employee';
+
 const endpoints =  {
-  getEmployees: 'https://reactapi.bsite.net/api/Employee',
-  addEmployee: 'https://reactapi.bsite.net/api/Employee',
+  default: defaultEndpoint,
+  removeEmployee: (id?: number) => `${defaultEndpoint}/${id}`,
 };
 
 export default endpoints;

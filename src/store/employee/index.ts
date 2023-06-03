@@ -1,3 +1,3 @@
 export { employeeReducer } from './reducers';
-export { getEmployees } from './actions';
-export { selectEmployees, selectCurrentEmployee, selectIsLoading, selectEditData, selectIsError } from './selectors';
+export { getEmployees, addEmployee, editEmployee, removeEmployee, setEditData, setLoading } from './actions';
+export { selectEmployees, selectIsLoading, selectEditData, selectIsError } from './selectors';

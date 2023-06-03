@@ -1,16 +1,19 @@
 import { connect } from 'react-redux';
 
 import type { EmployeeType } from 'types';
-import { addEmployee } from 'store/employee/actions';
+import { addEmployee } from 'store/employee';
 import { Input } from 'components';
+import { SubmitButton } from 'shared';
 import { TABLE_HEADERS } from 'utils';
 
-import { SubmitButton, Form } from './components';
+import { Form } from './components';
 import './styles.css';
+
+import { validate } from 'pages/Add/validate';
 
 const _Add = ({ onSubmit }: { onSubmit: (employee: EmployeeType) => void }) => {
   return (
-    <Form onSubmit={onSubmit}>
+    <Form validate={validate} onSubmit={onSubmit}>
       {({ handleSubmit, form, invalid }) => (
         <>
           <Input
