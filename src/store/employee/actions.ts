@@ -18,10 +18,7 @@ export const getEmployees = createAsyncThunk<AxiosResponse<EmployeeType[]>, unde
 export const addEmployee = createAsyncThunk<void, EmployeeType>(
   'ADD_EMPLOYEE',
     (employee, { dispatch }) => {
-      addEmployeeRequest<EmployeeType>({
-        ...employee,
-        birthday: new Date(Date.parse(employee.birthday)).toISOString(),
-      }).then(() => {
+      addEmployeeRequest<EmployeeType>(employee).then(() => {
         dispatch(getEmployees());
       });
     },

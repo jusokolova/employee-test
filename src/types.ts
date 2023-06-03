@@ -1,7 +1,7 @@
 export type EmployeeType = {
-  employeeId: number,
+  employeeId?: number,
   firstName: string,
   lastName: string,
   birthday: string,
-  height: number,
+  height?: number,
 };

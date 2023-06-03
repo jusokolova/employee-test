@@ -1,59 +1,47 @@
-import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
 import { connect } from 'react-redux';
-import { Form, Field } from 'react-final-form'
 
+import type { EmployeeType } from 'types';
 import { addEmployee } from 'store/employee/actions';
-import { Button, Input } from 'components';
-import { ROUTES } from 'pages';
+import { Input } from 'components';
 import { TABLE_HEADERS } from 'utils';
 
+import { SubmitButton, Form } from './components';
 import './styles.css';
 
-const _Add = ({ onSubmit }) => {
-  const navigate = useNavigate();
-  const returnToMain = () => {
-    navigate(ROUTES.MAIN);
-  };
-
+const _Add = ({ onSubmit }: { onSubmit: (employee: EmployeeType) => void }) => {
   return (
-    <Form
-      onSubmit={onSubmit}
-      render={({ handleSubmit, form, invalid, values }) => (
+    <Form onSubmit={onSubmit}>
+      {({ handleSubmit, form, invalid }) => (
         <>
-          <Button onClick={returnToMain}>
-            На главную
-          </Button>
+          <Input
+            name="firstName"
+            label={TABLE_HEADERS.firstName}
+          />
+          <Input
+            name="lastName"
+            label={TABLE_HEADERS.lastName}
+          />
+          <Input
+            name="birthday"
+            label={TABLE_HEADERS.birthday}
+            type="date"
+          />
+          <Input
+            name="height"
+            label={TABLE_HEADERS.height}
+          />
 
-          <form className="form" onSubmit={(e) => { e.preventDefault(); }}>
-            <Input
-              name="firstName"
-              label={TABLE_HEADERS.firstName}
-            />
-            <Input
-              name="lastName"
-              label={TABLE_HEADERS.lastName}
-            />
-            <Input
-              name="birthday"
-              label={TABLE_HEADERS.birthday}
-              type="date"
-            />
-            <Input
-              name="height"
-              label={TABLE_HEADERS.height}
-            />
-
-            <Button disabled={invalid} onClick={async () => {
-              await handleSubmit();
-              form.reset();
-            }}>
-              Сохранить
-            </Button>
-          </form>
+          <SubmitButton
+            disabled={invalid}
+            onClick={() => {
+              handleSubmit()?.then(() => {
+                form.reset();
+              });
+            }}
+          />
         </>
       )}
-    />
+    </Form>
   );
 };
 
