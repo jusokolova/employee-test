@@ -2,24 +2,17 @@ import React, { FC, useEffect } from 'react';
 import { connect } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import classNames from 'classnames/bind';
-import { FormSpy } from 'react-final-form';
 
 import type { EmployeeType } from 'types';
 import type { RootStore } from 'store/reducers';
-import {
-  getEmployees,
-  selectIsLoading,
-  setEditData,
-  removeEmployee,
-  setFilter, selectRenderEmployees, selectFilterValue,
-} from 'store/employee';
+import { getEmployees, selectIsLoading, setEditData, removeEmployee, selectRenderEmployees,
+  selectFilterValue, selectFilterResult } from 'store/employee';
 import { Button, Table, ButtonsGroup, Preloader, Input, Select } from 'components';
 import { ROUTES } from 'pages/index';
-import { filterByValue, SELECT_OPTIONS, HEADERS } from 'utils';
+import { SELECT_OPTIONS, HEADERS, DEFAULT_SELECT_OPTION, NO_RESULTS_FOUND } from 'utils';
 
 import { MainTable, FilterForm } from './components';
 import styles from './styles.css';
-import { selectFilterResult } from 'store/employee/selectors';
 
 const cx = classNames.bind(styles);
 
@@ -36,7 +29,6 @@ type MainPagePropsType = {
 
 const _MainPage: FC<MainPagePropsType> = ({
   filterValue,
-  filter,
   isLoading,
   fetchEmployees,
   editEmployee,
@@ -78,30 +70,19 @@ const _MainPage: FC<MainPagePropsType> = ({
 
       {isLoading && <Preloader />}
 
-      <FilterForm onSubmit={() => {}}>
-        {() => (
-          <>
-            <Select
-              label="Фильтровать по"
-              name="filterBy"
-              options={Object.values({ default: 'Выберите поле', ...SELECT_OPTIONS })}
-            />
-            <Input name="value" placeholder="Фильтр" />
-            <FormSpy
-              subscription={{ values: true }}
-              onChange={({ values }: { values: { value: string, filterBy: keyof typeof HEADERS } }) => {
-                filter({
-                  filterBy: values.filterBy,
-                  value: values.value || '',
-                  result: filterByValue({ header: values.filterBy, value: values.value, employees })
-                });
-              }}
-            />
-          </>
-        )}
+      <FilterForm>
+        <>
+          <Select
+            label="Фильтровать по"
+            name="filterBy"
+            options={Object.values({ default: DEFAULT_SELECT_OPTION, ...SELECT_OPTIONS })}
+          />
+
+          <Input name="value" placeholder="Фильтр" />
+        </>
       </FilterForm>
 
-      {!results.length && filterValue ? 'Нет результатов' : (
+      {!results.length && filterValue ? NO_RESULTS_FOUND : (
         <MainTable shouldRender={!isLoading && !!employees.length}>
           {employees.map((employee) => (
             <Table.Row key={employee.employeeId}>
@@ -140,5 +121,4 @@ export const MainPage = connect((state: RootStore) => ({
   fetchEmployees: getEmployees,
   deleteEmployee: removeEmployee,
   editEmployee: setEditData,
-  filter: setFilter,
 })(_MainPage);

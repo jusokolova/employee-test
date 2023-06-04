@@ -2,7 +2,7 @@ import { FC } from 'react';
 import { connect } from 'react-redux';
 
 import type { EmployeeType } from 'types';
-import { editEmployee } from 'store/employee';
+import { editEmployee, selectIsLoading } from 'store/employee';
 import { RootStore } from 'store/reducers';
 import { Input } from 'components';
 import { SubmitButton } from 'shared';
@@ -14,12 +14,18 @@ import { validate } from './validate';
 import { selectEditData } from 'store/employee';
 
 type EditProps = {
+  isLoading: boolean,
   onSubmit: (employee: Partial<EmployeeType>) => void,
   currentData: EmployeeType | Record<string, never>,
 };
 
-const _Edit: FC<EditProps> = ({ currentData, onSubmit }) => (
-  <Form initialValues={currentData} validate={validate} onSubmit={onSubmit}>
+const _Edit: FC<EditProps> = ({ isLoading, currentData, onSubmit }) => (
+  <Form
+    isLoading={isLoading}
+    initialValues={currentData}
+    validate={validate}
+    onSubmit={onSubmit}
+  >
     {({ handleSubmit, form, invalid }) => (
       <>
         <h1>Редактировать сотрудника</h1>
@@ -47,7 +53,7 @@ const _Edit: FC<EditProps> = ({ currentData, onSubmit }) => (
         />
 
         <SubmitButton
-          disabled={invalid}
+          disabled={invalid || isLoading}
           onClick={handleSubmit}
         />
       </>
@@ -57,6 +63,7 @@ const _Edit: FC<EditProps> = ({ currentData, onSubmit }) => (
 
 export const Edit = connect((state: RootStore) => ({
   currentData: selectEditData(state),
+  isLoading: selectIsLoading(state),
 }), {
   onSubmit: editEmployee,
 })(_Edit);

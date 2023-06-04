@@ -2,7 +2,7 @@ import { createReducer } from '@reduxjs/toolkit';
 
 import type { EmployeeType } from 'types';
 
-import { setLoading, getEmployees, addEmployee, setEditData, editEmployee, setFilter } from './actions';
+import { setLoading, getEmployees, addEmployee, setEditData, editEmployee, setFilter, removeEmployee } from './actions';
 import { mapEditEmployee } from 'utils';
 
 type InitialStateType = {
@@ -56,9 +56,6 @@ export const employeeReducer = createReducer(initialState, {
       state.isError = false;
     }
   },
-  [addEmployee.fulfilled.type]: (state) => {
-    state.isLoading = false;
-  },
   [addEmployee.rejected.type]: (state) => {
     state.isLoading = false;
     state.isError = true;
@@ -70,12 +67,21 @@ export const employeeReducer = createReducer(initialState, {
       state.isError = false;
     }
   },
-  [editEmployee.fulfilled.type]: (state,) => {
+  [editEmployee.fulfilled.type]: (state) => {
     state.editData = initialState.editData;
-    state.isLoading = false;
   },
   [editEmployee.rejected.type]: (state) => {
-    state.editData = initialState.editData;
+    state.isLoading = false;
+    state.isError = true;
+  },
+  [removeEmployee.pending.type]: (state) => {
+    state.isLoading = true;
+
+    if (state.isError) {
+      state.isError = false;
+    }
+  },
+  [removeEmployee.rejected.type]: (state) => {
     state.isLoading = false;
     state.isError = true;
   },

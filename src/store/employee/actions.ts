@@ -22,10 +22,10 @@ export const getEmployees = createAsyncThunk<Promise<EmployeeType[] | AxiosRespo
   },
 );
 
-export const addEmployee = createAsyncThunk<void, EmployeeType>(
+export const addEmployee = createAsyncThunk<void, Partial<EmployeeType>>(
   'ADD_EMPLOYEE',
     async (employee, { dispatch }) => {
-      await addEmployeeRequest<EmployeeType>(employee)
+      await addEmployeeRequest<Partial<EmployeeType>>(employee)
       dispatch(getEmployees());
     },
 );

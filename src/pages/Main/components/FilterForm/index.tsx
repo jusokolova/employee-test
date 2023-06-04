@@ -1,30 +1,44 @@
-import { ReactNode, FC } from 'react';
-import { Form as FForm, FormRenderProps } from 'react-final-form'
-import classNames from 'classnames/bind';
+import React, { FC, PropsWithChildren } from 'react';
+import { connect } from 'react-redux';
+import { FormSpy } from 'react-final-form';
 
 import type { EmployeeType } from 'types';
+import type { RootStore } from 'store/reducers';
+import { selectRenderEmployees, setFilter } from 'store/employee';
+import { DEFAULT_SELECT_OPTION, filterByValue, HEADERS } from 'utils';
 
-import styles from './styles.css';
+import { Form } from './Form';
 
-const cx = classNames.bind(styles);
-
-type FilterFormProps = {
-  onSubmit: (values: EmployeeType) => void,
-  children: (form: FormRenderProps<EmployeeType, Partial<EmployeeType>>) => ReactNode,
-}
-
-export const FilterForm: FC<FilterFormProps> = ({ onSubmit, children }) => {
-  return  (
-    <FForm
-      onSubmit={onSubmit}
-      render={(form) => (
-        <form
-          className={cx('filter-form')}
-          onSubmit={(e) => { e.preventDefault(); }}
-        >
-          {children(form)}
-        </form>
-      )}
-    />
-  );
+type FilterFormPropsType = {
+  filter: ({ value, filterBy, result }: { value: string, filterBy: keyof typeof HEADERS, result: (EmployeeType | undefined)[] }) => void,
+  employees: EmployeeType[],
 };
+
+const _FilterForm: FC<PropsWithChildren<FilterFormPropsType>> = ({ filter, employees, children }) => (
+  <Form onSubmit={() => {}}>
+    {() => (
+      <>
+        {children}
+
+        <FormSpy
+          subscription={{ values: true }}
+          onChange={({ values }: { values: { value: string, filterBy: keyof typeof HEADERS | typeof DEFAULT_SELECT_OPTION } }) => {
+            if (values.filterBy === DEFAULT_SELECT_OPTION) return;
+
+            filter({
+              filterBy: values.filterBy,
+              value: values.value || '',
+              result: filterByValue({ header: values.filterBy, value: values.value, employees })
+            });
+          }}
+        />
+      </>
+    )}
+  </Form>
+);
+
+export const FilterForm = connect((state: RootStore) => ({
+  employees: selectRenderEmployees(state),
+}), {
+  filter: setFilter,
+})(_FilterForm);

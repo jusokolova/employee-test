@@ -26,6 +26,10 @@ export const HEADERS = {
   'Рост': 'height',
 } as const;
 
+export const DEFAULT_SELECT_OPTION = 'Выберите поле' as const;
+
+export const NO_RESULTS_FOUND = 'Нет результатов';
+
 export const mapNewEmployee = (employee: Partial<EmployeeType>): Partial<EmployeeType> => ({
   ...employee,
   birthday: employee.birthday ? new Date(Date.parse(employee.birthday)).toISOString() : undefined,

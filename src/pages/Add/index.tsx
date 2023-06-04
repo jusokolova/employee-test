@@ -1,7 +1,9 @@
+import { FC } from 'react';
 import { connect } from 'react-redux';
 
+import type { RootStore } from 'store/reducers';
 import type { EmployeeType } from 'types';
-import { addEmployee } from 'store/employee';
+import { addEmployee, selectIsLoading } from 'store/employee';
 import { Input } from 'components';
 import { SubmitButton } from 'shared';
 import { TABLE_HEADERS } from 'utils';
@@ -10,8 +12,10 @@ import { Form } from './components';
 
 import { validate } from 'pages/Add/validate';
 
-const _Add = ({ onSubmit }: { onSubmit: (employee: EmployeeType) => void }) => (
-  <Form validate={validate} onSubmit={onSubmit}>
+type AddPropsType = { isLoading: boolean, onSubmit: (employee: Partial<EmployeeType>) => void };
+
+const _Add: FC<AddPropsType> = ({ isLoading, onSubmit }) => (
+  <Form isLoading={isLoading} validate={validate} onSubmit={onSubmit}>
     {({ handleSubmit, form, invalid }) => (
       <>
         <h1>Добавить сотрудника</h1>
@@ -35,7 +39,7 @@ const _Add = ({ onSubmit }: { onSubmit: (employee: EmployeeType) => void }) => (
         />
 
         <SubmitButton
-          disabled={invalid}
+          disabled={invalid || isLoading}
           onClick={() => {
             handleSubmit()?.then(() => {
               form.reset();
@@ -47,6 +51,8 @@ const _Add = ({ onSubmit }: { onSubmit: (employee: EmployeeType) => void }) => (
   </Form>
 );
 
-export const Add = connect(null, {
+export const Add = connect((state: RootStore) => ({
+  isLoading: selectIsLoading(state),
+}), {
   onSubmit: addEmployee,
 })(_Add);
