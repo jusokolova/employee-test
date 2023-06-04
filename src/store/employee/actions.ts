@@ -1,7 +1,7 @@
 import { AxiosResponse } from 'axios';
 import { createAction, createAsyncThunk } from '@reduxjs/toolkit';
 
-import type { EmployeeType } from 'types';
+import type { EmployeeType, EmployeeIDType, FilterType } from 'types';
 
 import { fetchEmployees } from 'api/fetchEmployees';
 import { addEmployeeRequest } from 'api/addEmployee';
@@ -10,10 +10,19 @@ import { editEmployeeRequest } from 'api/editEmployee';
 
 import { selectEditData } from 'store/employee';
 import { RootStore } from 'store/reducers';
+import { fetchEmployee } from 'api/fetchEmployee';
 
 export const setLoading = createAction<boolean>('SET_LOADING');
 export const setEditData = createAction<EmployeeType>('SET_EMPLOYEE');
-export const setFilter = createAction<{ value: string, filterBy: string, result: (EmployeeType | undefined)[] }>('SET_FILTER_VALUE');
+export const setFilter = createAction<FilterType>('SET_FILTER_VALUE');
+
+// Реализовано, просто не нашла применения в UI :)
+export const getEmployee = createAsyncThunk<Promise<EmployeeType | AxiosResponse<EmployeeType>>, EmployeeIDType>(
+  'GET_EMPLOYEE',
+  async (id: EmployeeIDType) => {
+    return await fetchEmployee<EmployeeType>(id);
+  },
+);
 
 export const getEmployees = createAsyncThunk<Promise<EmployeeType[] | AxiosResponse<EmployeeType[]>>, undefined>(
   'GET_EMPLOYEES',
@@ -40,10 +49,12 @@ export const editEmployee = createAsyncThunk<void, Partial<EmployeeType>, { stat
   },
 );
 
-export const removeEmployee = createAsyncThunk<void, number>(
+export const removeEmployee = createAsyncThunk<void, EmployeeIDType | undefined>(
   'REMOVE_EMPLOYEE',
   async (id, { dispatch }) => {
-    await removeEmployeeRequest<Pick<EmployeeType, 'employeeId'>>(id);
+    if (!id) throw new Error('No id provided');
+
+    await removeEmployeeRequest<void>(id);
     dispatch(getEmployees());
   },
 );

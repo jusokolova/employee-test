@@ -2,15 +2,15 @@ import React, { FC, PropsWithChildren } from 'react';
 import { connect } from 'react-redux';
 import { FormSpy } from 'react-final-form';
 
-import type { EmployeeType } from 'types';
+import type { EmployeeType, FilterType, HeadersType } from 'types';
 import type { RootStore } from 'store/reducers';
 import { selectRenderEmployees, setFilter } from 'store/employee';
-import { DEFAULT_SELECT_OPTION, filterByValue, HEADERS } from 'utils';
+import { DEFAULT_SELECT_OPTION, filterByValue } from 'utils';
 
 import { Form } from './Form';
 
 type FilterFormPropsType = {
-  filter: ({ value, filterBy, result }: { value: string, filterBy: keyof typeof HEADERS, result: (EmployeeType | undefined)[] }) => void,
+  filter: ({ value, filterBy, result }: FilterType) => void,
   employees: EmployeeType[],
 };
 
@@ -22,7 +22,7 @@ const _FilterForm: FC<PropsWithChildren<FilterFormPropsType>> = ({ filter, emplo
 
         <FormSpy
           subscription={{ values: true }}
-          onChange={({ values }: { values: { value: string, filterBy: keyof typeof HEADERS | typeof DEFAULT_SELECT_OPTION } }) => {
+          onChange={({ values }: { values: { value: string, filterBy: HeadersType | typeof DEFAULT_SELECT_OPTION } }) => {
             if (values.filterBy === DEFAULT_SELECT_OPTION) return;
 
             filter({

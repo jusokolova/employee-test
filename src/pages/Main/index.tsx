@@ -3,13 +3,13 @@ import { connect } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import classNames from 'classnames/bind';
 
-import type { EmployeeType } from 'types';
+import type { EmployeeIDType, EmployeeType, HeadersType } from 'types';
 import type { RootStore } from 'store/reducers';
 import { getEmployees, selectIsLoading, setEditData, removeEmployee, selectRenderEmployees,
   selectFilterValue, selectFilterResult } from 'store/employee';
 import { Button, Table, ButtonsGroup, Preloader, Input, Select } from 'components';
 import { ROUTES } from 'pages/index';
-import { SELECT_OPTIONS, HEADERS, DEFAULT_SELECT_OPTION, NO_RESULTS_FOUND } from 'utils';
+import { SELECT_OPTIONS, DEFAULT_SELECT_OPTION, NO_RESULTS_FOUND } from 'utils';
 
 import { MainTable, FilterForm } from './components';
 import styles from './styles.css';
@@ -19,9 +19,9 @@ const cx = classNames.bind(styles);
 type MainPagePropsType = {
   results: (EmployeeType | undefined)[],
   filterValue: string,
-  deleteEmployee: (id: number) => void,
+  deleteEmployee: (id: EmployeeIDType) => void,
   editEmployee: (employee: EmployeeType) => void,
-  filter: ({ value, filterBy, result }: { value: string, filterBy: keyof typeof HEADERS, result: (EmployeeType | undefined)[] }) => void,
+  filter: ({ value, filterBy, result }: { value: string, filterBy: HeadersType, result: (EmployeeType | undefined)[] }) => void,
   fetchEmployees: () => any,
   employees: EmployeeType[],
   isLoading: boolean,
@@ -95,7 +95,7 @@ const _MainPage: FC<MainPagePropsType> = ({
               <Table.Cell>
                 <Button
                   className={cx('delete-button')}
-                  onClick={() => { deleteEmployee(employee.employeeId!) }}
+                  onClick={() => { deleteEmployee(employee.employeeId) }}
                 />
               </Table.Cell>
 

@@ -1,6 +1,6 @@
 import { createReducer } from '@reduxjs/toolkit';
 
-import type { EmployeeType } from 'types';
+import type { EmployeeType, FilterType } from 'types';
 
 import { setLoading, getEmployees, addEmployee, setEditData, editEmployee, setFilter, removeEmployee } from './actions';
 import { mapEditEmployee } from 'utils';
@@ -10,7 +10,7 @@ type InitialStateType = {
   isError: boolean,
   employees: EmployeeType[] | never[],
   editData: EmployeeType | Record<string, string | number | never>,
-  filter: { value: string, filterBy: string, result: (EmployeeType | undefined)[] },
+  filter: FilterType,
 };
 
 const initialState: InitialStateType = {
