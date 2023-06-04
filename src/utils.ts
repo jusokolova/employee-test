@@ -56,3 +56,32 @@ export const filterByValue = ({ header, value, employees }: { header: HeadersTyp
     .filter((data) => String(data).match(value))
     .map((match) => employees.find((employee) => employee[HEADERS[header]] === match));
 };
+
+const getLang = () => {
+  if (navigator.languages !== undefined)
+    return navigator.languages[0];
+  return navigator.language;
+}
+
+export const sortByHeader = ({ header, employees, isSorted }: { header: HeadersType, employees: EmployeeType[] | (EmployeeType | undefined)[], isSorted: boolean }): (EmployeeType | undefined)[] | undefined => {
+  if (!header || !employees.length) return [];
+  const locale = getLang();
+
+  return [...employees].sort((employeePrev, employeeNext) => {
+    if (typeof employeePrev?.[HEADERS[header]] === 'number' && typeof employeeNext?.[HEADERS[header]] === 'number') {
+      if (isSorted) {
+        return Number(employeePrev[HEADERS[header]]) - Number(employeeNext[HEADERS[header]]);
+      }
+
+      return Number(employeeNext[HEADERS[header]]) - Number(employeePrev[HEADERS[header]]);
+    }
+
+    if (typeof employeePrev?.[HEADERS[header]] === 'string' && typeof employeeNext?.[HEADERS[header]] === 'string') {
+      if (isSorted) {
+        return employeeNext[HEADERS[header]]?.localeCompare(employeePrev[HEADERS[header]], locale);
+      }
+
+      return employeePrev[HEADERS[header]]?.localeCompare(employeeNext[HEADERS[header]], locale);
+    }
+  })
+};

@@ -2,7 +2,8 @@ import { createReducer } from '@reduxjs/toolkit';
 
 import type { EmployeeType, FilterType } from 'types';
 
-import { setLoading, getEmployees, addEmployee, setEditData, editEmployee, setFilter, removeEmployee } from './actions';
+import { setLoading, getEmployees, addEmployee, setEditData, editEmployee, setFilter, removeEmployee,
+  setEmployees } from './actions';
 import { mapEditEmployee } from 'utils';
 
 type InitialStateType = {
@@ -24,6 +25,9 @@ const initialState: InitialStateType = {
 export const employeeReducer = createReducer(initialState, {
   [setLoading.type]: (state, { payload }) => {
     state.isLoading = payload;
+  },
+  [setEmployees.type]: (state, { payload }) => {
+    state.employees = payload;
   },
   [setFilter.type]: (state, { payload }) => {
     state.filter = {

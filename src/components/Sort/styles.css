@@ -1,0 +1,15 @@
+.sort-container {
+  position: relative;
+}
+
+.sort-icon {
+  position: absolute;
+  top: 20px;
+  width: 20px;
+  height: 20px;
+  background-image: url('../../assets/sort.256x204.png');
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: contain;
+  cursor: pointer;
+}

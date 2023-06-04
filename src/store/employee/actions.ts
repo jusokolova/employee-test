@@ -15,6 +15,7 @@ import { fetchEmployee } from 'api/fetchEmployee';
 export const setLoading = createAction<boolean>('SET_LOADING');
 export const setEditData = createAction<EmployeeType>('SET_EMPLOYEE');
 export const setFilter = createAction<FilterType>('SET_FILTER_VALUE');
+export const setEmployees = createAction<EmployeeType[]>('SET_EMPLOYEES');
 
 // Реализовано, просто не нашла применения в UI :)
 export const getEmployee = createAsyncThunk<Promise<EmployeeType | AxiosResponse<EmployeeType>>, EmployeeIDType>(

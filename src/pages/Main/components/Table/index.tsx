@@ -1,6 +1,6 @@
 import React, { FC, PropsWithChildren } from 'react';
 
-import { Table } from 'components';
+import { Sort, Table } from 'components';
 import { TABLE_HEADERS } from 'utils';
 
 type TablePropsType = {
@@ -10,9 +10,11 @@ type TablePropsType = {
 export const MainTable: FC<PropsWithChildren<TablePropsType>> = ({ shouldRender, children }) => shouldRender ? (
   <Table.Container
     header={Object.entries(TABLE_HEADERS).map(([key, value]) => (
-      <Table.Header key={key}>
-        {value}
-      </Table.Header>
+      <Sort key={key} value={value}>
+        <Table.Header key={key}>
+          {value}
+        </Table.Header>
+      </Sort>
     ))}
   >
     {children}
