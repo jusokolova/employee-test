@@ -1,0 +1,10 @@
+.input {
+  padding: 10px;
+  border-radius: 5px;
+  border: 1px solid darkgray;
+  transition: border 0.3s;
+}
+
+.input:hover {
+  border-color: dimgray;
+}

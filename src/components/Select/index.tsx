@@ -6,20 +6,20 @@ import styles from './styles.css';
 
 const cx = classNames.bind(styles);
 
-type InputType = {
+type SelectPropsType = {
   name: string,
   placeholder?: string,
   label?: string,
-  type?: string,
   className?: string,
+  options: string[],
 }
 
-export const Input: FC<InputType> = ({
+export const Select: FC<SelectPropsType> = ({
   className,
   name,
-  type,
   placeholder,
   label,
+  options,
 }) => (
   <>
     {label && (
@@ -28,11 +28,16 @@ export const Input: FC<InputType> = ({
       </label>
     )}
     <Field
-      className={cx('input', className)}
+      className={cx('select', className)}
       name={name}
-      component="input"
-      type={type}
+      component="select"
       placeholder={placeholder || label}
-    />
+    >
+      {options.map((value) => (
+        <option key={value}>
+          {value}
+        </option>
+      ))}
+    </Field>
   </>
 );

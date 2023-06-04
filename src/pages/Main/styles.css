@@ -1,0 +1,16 @@
+.delete-button {
+  border-radius: 7px;
+  padding: 0;
+  width: 30px;
+  height: 30px;
+  border: none;
+  background-image: url("../../assets/x-square-svgrepo-com.png");
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+  transition: background-color 0.15s;
+}
+
+.delete-button:hover {
+  background-color: red;
+}

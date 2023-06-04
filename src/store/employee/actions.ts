@@ -13,6 +13,7 @@ import { RootStore } from 'store/reducers';
 
 export const setLoading = createAction<boolean>('SET_LOADING');
 export const setEditData = createAction<EmployeeType>('SET_EMPLOYEE');
+export const setFilter = createAction<{ value: string, filterBy: string, result: (EmployeeType | undefined)[] }>('SET_FILTER_VALUE');
 
 export const getEmployees = createAsyncThunk<Promise<EmployeeType[] | AxiosResponse<EmployeeType[]>>, undefined>(
   'GET_EMPLOYEES',

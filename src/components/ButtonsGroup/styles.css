@@ -1,0 +1,20 @@
+.container {
+  margin-bottom: 30px;
+  display: flex;
+  flex-direction: column;
+}
+
+.button-item:not(:last-of-type) {
+  margin-bottom: 10px;
+}
+
+@media (min-width: 768px) {
+  .container {
+    flex-direction: row;
+  }
+
+  .button-item:not(:last-of-type) {
+    margin-bottom: 0;
+    margin-right: 10px;
+  }
+}

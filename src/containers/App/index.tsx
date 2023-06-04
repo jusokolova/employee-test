@@ -1,17 +1,20 @@
 import React from 'react';
 import { Navigate, Route, Routes, BrowserRouter } from 'react-router-dom';
-
+import classNames from 'classnames/bind';
 
 import { initializeStore } from 'store';
 import { rootReducer } from 'store/reducers';
 import { MainPage, Add, ROUTES, Edit } from 'pages';
 
 import { withReduxStore } from 'hocs';
-import './styles.css';
+
+import styles from './styles.css';
+
+const cx = classNames.bind(styles);
 
 const App = () => (
   <BrowserRouter>
-    <div className="app">
+    <div className={cx('app')}>
       <Routes>
         <Route path={ROUTES.MAIN} element={<MainPage />} />
         <Route path={ROUTES.ADD} element={<Add />} />

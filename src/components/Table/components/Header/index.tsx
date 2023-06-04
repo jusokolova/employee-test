@@ -1,9 +1,12 @@
 import { PropsWithChildren } from 'react';
+import classNames from 'classnames/bind';
 
-import './styles.css';
+import styles from './styles.css';
+
+const cx = classNames.bind(styles);
 
 export const Header = ({ children }: PropsWithChildren) => (
-  <th className="header">
+  <th className={cx('header')}>
     {children}
   </th>
 );

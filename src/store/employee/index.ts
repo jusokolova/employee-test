@@ -1,3 +1,4 @@
 export { employeeReducer } from './reducers';
-export { getEmployees, addEmployee, editEmployee, removeEmployee, setEditData, setLoading } from './actions';
-export { selectEmployees, selectIsLoading, selectEditData, selectIsError } from './selectors';
+export { getEmployees, addEmployee, editEmployee, removeEmployee, setEditData, setLoading, setFilter } from './actions';
+export { selectEmployees, selectIsLoading, selectEditData, selectIsError, selectFilter, selectFilterValue,
+  selectFilterBy, selectRenderEmployees } from './selectors';

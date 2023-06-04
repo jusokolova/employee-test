@@ -1,9 +1,12 @@
 import { PropsWithChildren } from 'react';
+import classNames from 'classnames/bind';
 
-import './styles.css';
+import styles from './styles.css';
 
-export const Cell = ({ children }: PropsWithChildren) => (
-  <td className="cell">
+const cx = classNames.bind(styles);
+
+export const Cell = ({ children, className }: PropsWithChildren<{ className?: string }>) => (
+  <td className={cx('cell', className)}>
     {children}
   </td>
 );

@@ -1,9 +1,17 @@
 import { ButtonHTMLAttributes } from 'react';
+import classNames from 'classnames/bind';
 
-import './styles.css';
+import styles from './styles.css';
 
-export const Button = ({ type, children, onClick }: ButtonHTMLAttributes<HTMLButtonElement>) => (
-  <button className="button" type={type} onClick={onClick}>
+const cx = classNames.bind(styles);
+
+export const Button = ({ type, children, onClick, className, disabled }: ButtonHTMLAttributes<HTMLButtonElement>) => (
+  <button
+    className={cx('button', className)}
+    type={type}
+    onClick={onClick}
+    disabled={disabled}
+  >
     {children}
   </button>
 );

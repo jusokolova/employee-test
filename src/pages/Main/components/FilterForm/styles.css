@@ -1,5 +1,5 @@
-.form {
+.filter-form {
+  margin: 20px 0;
   display: grid;
   grid-gap: 10px;
-  max-width: 70%;
 }

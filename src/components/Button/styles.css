@@ -5,10 +5,15 @@
   background-color: white;
   outline: none;
   border: 1px solid darkgray;
-  transition: background-color, border 0.3s;
+  transition: background-color 0.3s, border 0.3s;
+  cursor: pointer;
 }
 
-button:disabled {
+.button:hover {
+  background-color: gainsboro;
+}
+
+.button:disabled {
   background-color: darkgray;
   border-color: gray;
 }

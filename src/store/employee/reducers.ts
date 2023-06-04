@@ -2,7 +2,7 @@ import { createReducer } from '@reduxjs/toolkit';
 
 import type { EmployeeType } from 'types';
 
-import { setLoading, getEmployees, addEmployee, setEditData, editEmployee } from './actions';
+import { setLoading, getEmployees, addEmployee, setEditData, editEmployee, setFilter } from './actions';
 import { mapEditEmployee } from 'utils';
 
 type InitialStateType = {
@@ -10,6 +10,7 @@ type InitialStateType = {
   isError: boolean,
   employees: EmployeeType[] | never[],
   editData: EmployeeType | Record<string, string | number | never>,
+  filter: { value: string, filterBy: string, result: (EmployeeType | undefined)[] },
 };
 
 const initialState: InitialStateType = {
@@ -17,11 +18,18 @@ const initialState: InitialStateType = {
   isError: false,
   employees: [],
   editData: {},
+  filter: { value: '', filterBy: '', result: [] },
 };
 
 export const employeeReducer = createReducer(initialState, {
   [setLoading.type]: (state, { payload }) => {
     state.isLoading = payload;
+  },
+  [setFilter.type]: (state, { payload }) => {
+    state.filter = {
+      ...state.filter,
+      ...payload,
+    };
   },
   [setEditData.type]: (state, { payload }) => {
     state.editData = mapEditEmployee(payload);

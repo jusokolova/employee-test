@@ -9,7 +9,6 @@ import { SubmitButton } from 'shared';
 import { TABLE_HEADERS } from 'utils';
 
 import { Form } from './components';
-import './styles.css';
 
 import { validate } from './validate';
 import { selectEditData } from 'store/employee';
@@ -23,6 +22,8 @@ const _Edit: FC<EditProps> = ({ currentData, onSubmit }) => (
   <Form initialValues={currentData} validate={validate} onSubmit={onSubmit}>
     {({ handleSubmit, form, invalid }) => (
       <>
+        <h1>Редактировать сотрудника</h1>
+
         <Input
           name="employeeId"
           label={TABLE_HEADERS.employeeId}
