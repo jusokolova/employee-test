@@ -5,8 +5,10 @@ import classNames from 'classnames/bind';
 
 import type { EmployeeIDType, EmployeeType, HeadersType } from 'types';
 import type { RootStore } from 'store/reducers';
-import { getEmployees, selectIsLoading, setEditData, removeEmployee, selectRenderEmployees,
-  selectFilterValue, selectFilterResult } from 'store/employee';
+import {
+  getEmployees, selectIsLoading, setEditData, removeEmployee, selectRenderEmployees,
+  selectFilterValue, selectFilterResult, setLoading
+} from 'store/employee';
 import { Button, Table, ButtonsGroup, Preloader, Input, Select } from 'components';
 import { ROUTES } from 'pages/index';
 import { SELECT_OPTIONS, DEFAULT_SELECT_OPTION, NO_RESULTS_FOUND } from 'utils';
@@ -19,12 +21,13 @@ const cx = classNames.bind(styles);
 type MainPagePropsType = {
   results: (EmployeeType | undefined)[],
   filterValue: string,
+  employees: EmployeeType[],
+  isLoading: boolean,
+  fetchEmployees: () => any,
   deleteEmployee: (id: EmployeeIDType) => void,
   editEmployee: (employee: EmployeeType) => void,
   filter: ({ value, filterBy, result }: { value: string, filterBy: HeadersType, result: (EmployeeType | undefined)[] }) => void,
-  fetchEmployees: () => any,
-  employees: EmployeeType[],
-  isLoading: boolean,
+  renderPreloader: (value: boolean) => void,
 };
 
 const _MainPage: FC<MainPagePropsType> = ({
@@ -35,11 +38,13 @@ const _MainPage: FC<MainPagePropsType> = ({
   deleteEmployee,
   employees,
   results,
+  renderPreloader,
 }) => {
   const navigate = useNavigate();
 
   useEffect(() => {
     if (!employees.length) {
+      renderPreloader(true);
       fetchEmployees();
     }
   }, []);
@@ -121,4 +126,5 @@ export const MainPage = connect((state: RootStore) => ({
   fetchEmployees: getEmployees,
   deleteEmployee: removeEmployee,
   editEmployee: setEditData,
+  renderPreloader: setLoading,
 })(_MainPage);

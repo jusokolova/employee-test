@@ -1,4 +1,5 @@
 import type { EmployeeType, HeadersType } from 'types';
+import { EmployeeIDType } from 'types';
 
 export const EMPLOYEE_FIELDS = {
   id: 'employeeId',
@@ -85,3 +86,18 @@ export const sortByHeader = ({ header, employees, isSorted }: { header: HeadersT
     }
   })
 };
+
+export const filterRemovedEmployees = (id: EmployeeIDType, employees: EmployeeType[]): EmployeeType[] =>
+  employees.filter((employee) => employee.employeeId !== id);
+
+export const addNewEmployee = (employee: Partial<EmployeeType>, employees: EmployeeType[]): Partial<EmployeeType>[] =>
+  [...employees, { employeeId: Number(employees[employees.length - 1].employeeId) + 1, ...employee }];
+
+export const editOldEmployee = (data: Partial<EmployeeType>, employees: EmployeeType[]) =>
+  employees.map((employee) => {
+    if (employee.employeeId === data.employeeId) {
+      return { ...employee, ...data };
+    }
+
+    return employee;
+  });

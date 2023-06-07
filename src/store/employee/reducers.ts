@@ -39,34 +39,29 @@ export const employeeReducer = createReducer(initialState, {
     state.editData = mapEditEmployee(payload);
   },
   [getEmployees.pending.type]: (state) => {
-    state.isLoading = true;
-
     if (state.isError) {
       state.isError = false;
     }
   },
   [getEmployees.fulfilled.type]: (state, { payload }) => {
-    state.isLoading = false;
+    if (state.isLoading) {
+      state.isLoading = false;
+    }
+
     state.employees = payload;
   },
   [getEmployees.rejected.type]: (state) => {
-    state.isLoading = false;
     state.isError = true;
   },
   [addEmployee.pending.type]: (state) => {
-    state.isLoading = true;
-
     if (state.isError) {
       state.isError = false;
     }
   },
   [addEmployee.rejected.type]: (state) => {
-    state.isLoading = false;
     state.isError = true;
   },
   [editEmployee.pending.type]: (state) => {
-    state.isLoading = true;
-
     if (state.isError) {
       state.isError = false;
     }
@@ -75,18 +70,14 @@ export const employeeReducer = createReducer(initialState, {
     state.editData = initialState.editData;
   },
   [editEmployee.rejected.type]: (state) => {
-    state.isLoading = false;
     state.isError = true;
   },
   [removeEmployee.pending.type]: (state) => {
-    state.isLoading = true;
-
     if (state.isError) {
       state.isError = false;
     }
   },
   [removeEmployee.rejected.type]: (state) => {
-    state.isLoading = false;
     state.isError = true;
   },
 });
